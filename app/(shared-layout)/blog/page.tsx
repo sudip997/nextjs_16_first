@@ -10,9 +10,19 @@ import Link from "next/link";
 import { resolve } from "path";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Metadata } from "next";
+import { connection } from "next/server";
+import { cacheLife, cacheTag } from "next/cache";
 
-export const dynamic = "force-static";
-export const revalidate = 30;
+// export const dynamic = "force-static";
+// export const revalidate = 30;
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Read our latest articles and insights",
+  category: "Web Development",
+  authors: [{ name: "John Doe" }],
+};
 
 export default function Blog() {
   //   const data = useQuery(api.posts.getPosts);
@@ -27,15 +37,18 @@ export default function Blog() {
           Insgights, thoughts and trends from out team.
         </p>
       </div>
-      <Suspense fallback={<SkeletonLoadingUI />}>
-        <LoadBlogList />
-      </Suspense>
+      {/* <Suspense fallback={<SkeletonLoadingUI />}> */}
+      <LoadBlogList />
+      {/* </Suspense> */}
     </div>
   );
 }
 
 async function LoadBlogList() {
-  await new Promise((resolve) => setTimeout(resolve, 5000));
+  //   await new Promise((resolve) => setTimeout(resolve, 5000));
+  "use cache";
+  cacheLife("hours");
+  cacheTag("blog");
   const data = await fetchQuery(api.posts.getPosts);
 
   return (
