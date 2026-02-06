@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
         port: "",
       },
       {
-        hostname: "exuberant-octopus-956.convex.cloud",
+        hostname: "adventurous-falcon-212.convex.site",
         protocol: "https",
         port: "",
       },
