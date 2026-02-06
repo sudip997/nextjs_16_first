@@ -37,18 +37,19 @@ export default function Blog() {
           Insgights, thoughts and trends from out team.
         </p>
       </div>
-      {/* <Suspense fallback={<SkeletonLoadingUI />}> */}
-      <LoadBlogList />
-      {/* </Suspense> */}
+      <Suspense fallback={<SkeletonLoadingUI />}>
+        <LoadBlogList />
+      </Suspense>
     </div>
   );
 }
 
 async function LoadBlogList() {
   //   await new Promise((resolve) => setTimeout(resolve, 5000));
-  "use cache";
-  cacheLife("hours");
-  cacheTag("blog");
+  //   "use cache";
+  //   cacheLife("hours");
+  //   cacheTag("blog");
+  await connection();
   const data = await fetchQuery(api.posts.getPosts);
 
   return (
